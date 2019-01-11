@@ -48,8 +48,8 @@ tags:
   - name: User
     description: Operations about user
 servers:
-  - url: 'https://bang-jmbzuf.turbo360-vertex.com/api'
-  - url: 'http://bang-jmbzuf.turbo360-vertex.com/api'
+  - url: 'http://example.com/api/v1'
+  - url: 'https://example.com/api/v1'
 
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
