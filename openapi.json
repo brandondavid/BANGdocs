@@ -33,10 +33,10 @@
   ],
   "servers": [
     {
-      "url": "https://bang-jmbzuf.turbo360-vertex.com/api"
+      "url": "http://example.com/api/v1"
     },
     {
-      "url": "http://bang-jmbzuf.turbo360-vertex.com/api"
+      "url": "https://example.com/api/v1"
     }
   ],
   "paths": {
