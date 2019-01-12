@@ -1,0 +1,355 @@
+{
+  "swagger": "2.0",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "host": "bang-jmbzuf.turbo360-vertex.com",
+  "basePath": "/api",
+  "info": {
+    "description": "This is an **example** API to demonstrate features of OpenAPI specification\n# Introduction\nThis specification is intended to to be a good starting point for describing your API in \n[OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).\n",
+    "version": "0.1.0",
+    "title": "Bay Area Networking Guide",
+    "x-logo": {
+      "url": "https://apis.guru/openapi-template/logo.png"
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Company",
+      "description": "Operations about company"
+    }
+  ],
+  "paths": {
+    "/company": {
+      "parameters": [
+        {
+          "name": "Origin",
+          "in": "header",
+          "description": "CORS header",
+          "type": "string",
+          "default": "SwaggerUI"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Get list of all companies",
+        "description": "Some description of the operation. \nYou can use `markdown` here.\n",
+        "operationId": "getCompany",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            },
+            "examples": {
+              "application/json": {
+                "username": "user1",
+                "email": "user@example.com"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Add a company.",
+        "description": "postCompany description.",
+        "operationId": "postCompany",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/company/{id}": {
+      "parameters": [
+        {
+          "name": "Origin",
+          "in": "header",
+          "description": "CORS header",
+          "type": "string",
+          "default": "SwaggerUI"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Return a company with a given ID.",
+        "description": "Some description of the operation. \nYou can use `markdown` here.\n",
+        "operationId": "getCompanyById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the company that needs to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            },
+            "examples": {
+              "application/json": {
+                "username": "user1",
+                "email": "user@example.com"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Edit a company with a given ID.",
+        "description": "Some description of the operation. \nYou can use `markdown` here.\n",
+        "operationId": "putCompanyById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the company that needs to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            },
+            "examples": {
+              "application/json": {
+                "username": "user1",
+                "email": "user@example.com"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Remove a company with a given ID.",
+        "description": "Some description of the operation. \nYou can use `markdown` here.\n",
+        "operationId": "deleteCompanyById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the company to be removed.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            },
+            "examples": {
+              "application/json": {
+                "username": "user1",
+                "email": "user@example.com"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Company": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The company's name.",
+          "type": "string"
+        },
+        "address": {
+          "description": "Physical address.",
+          "type": "string",
+          "format": "address"
+        },
+        "phone": {
+          "description": "Switchboard telephone number.",
+          "type": "string",
+          "format": "phone"
+        },
+        "fax": {
+          "description": "Main fax number.",
+          "type": "string",
+          "format": "phone"
+        },
+        "mainUrl": {
+          "description": "Main URL.",
+          "type": "string",
+          "format": "url"
+        },
+        "employmentUrl": {
+          "description": "Employment-related URL.",
+          "type": "string",
+          "format": "url"
+        },
+        "description": {
+          "description": "Brief description of its products and/or services.",
+          "type": "string"
+        },
+        "techPub": {
+          "description": "Whether there's a formal in-house technical publications service.",
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No",
+            "Needed"
+          ]
+        },
+        "training": {
+          "description": "Whether there's a formal in-house training service.",
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No",
+            "Needed"
+          ]
+        },
+        "marketing": {
+          "description": "Whether there's a formal in-house marketing communications service.",
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No",
+            "Needed"
+          ]
+        },
+        "managers": {
+          "description": "The titles, contact information, and key responsibilities of any technical communications department managers.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Manager"
+          }
+        },
+        "tools": {
+          "description": "Which tools are in use in technical communications department(s).",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tool"
+          }
+        },
+        "global": {
+          "description": "Whether the company creates content for a global audience.",
+          "type": "boolean"
+        },
+        "credentials": {
+          "description": "The credentials the company typically seeks in its candidates.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Credential"
+          }
+        }
+      }
+    },
+    "Manager": {
+      "description": "Technical communications department managers.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Full name of manager.",
+          "type": "string",
+          "example": "Jane Thomas"
+        },
+        "title": {
+          "description": "Title of manager's position.",
+          "type": "string",
+          "example": "Director of Technical Communication"
+        },
+        "contactInfo": {
+          "description": "Email address of manager.",
+          "type": "string",
+          "format": "email",
+          "example": "jane.thomas@abcinc.com"
+        },
+        "responsibilities": {
+          "description": "Key responsibilities of manager.",
+          "type": "string",
+          "example": "Directs team of technical writers."
+        }
+      }
+    },
+    "Tool": {
+      "description": "A tool in use in a technical communications department.",
+      "type": "string",
+      "example": "tool example"
+    },
+    "Credential": {
+      "description": "A credential a company typically seeks in its candidates.",
+      "type": "string",
+      "example": "credential example"
+    }
+  }
+}
