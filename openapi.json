@@ -4,107 +4,117 @@
     "http",
     "https"
   ],
-  "host": "example.com",
-  "basePath": "/api/v1",
+  "host": "bang-jmbzuf.turbo360-vertex.com",
+  "basePath": "/api",
   "info": {
-    "description": "This is an **example** API to demonstrate features of OpenAPI specification\n# Introduction\nThis specification is intended to to be a good starting point for describing your API in \n[OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).\nIt also demonstrates features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) tool and \n[ReDoc](https://github.com/Rebilly/ReDoc) documentation engine. So beyond the standard OpenAPI syntax we use a few \n[vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n\n# OpenAPI Specification\nThe goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which\nallows both humans and computers to discover and understand the capabilities of the service without access to source\ncode, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can \nunderstand and interact with the remote service with a minimal amount of implementation logic. Similar to what\ninterfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.\n",
-    "version": "1.0.0",
-    "title": "Example.com",
-    "termsOfService": "https://example.com/terms/",
-    "contact": {
-      "email": "contact@example.com",
-      "url": "http://example.com/contact"
-    },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    },
+    "description": "This is an **example** API to demonstrate features of OpenAPI specification\n# Introduction\nThis specification is intended to to be a good starting point for describing your API in \n[OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).\n",
+    "version": "0.1.0",
+    "title": "Bay Area Networking Guide",
     "x-logo": {
       "url": "https://apis.guru/openapi-template/logo.png"
     }
   },
-  "externalDocs": {
-    "description": "Find out how to create Github repo for your OpenAPI spec.",
-    "url": "https://github.com/Rebilly/generator-openapi-repo"
-  },
   "produces": [
-    "application/json",
-    "application/xml",
-    "text/csv"
+    "application/json"
   ],
   "consumes": [
-    "application/json",
-    "application/xml"
+    "application/json"
   ],
   "tags": [
     {
-      "name": "Echo",
-      "description": "Example echo operations"
-    },
-    {
-      "name": "User",
-      "description": "Operations about user"
+      "name": "Company",
+      "description": "Operations about company"
     }
   ],
-  "securityDefinitions": {
-    "main_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://example.com/api/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "read:users": "read users info",
-        "write:users": "modify or remove users"
-      }
-    },
-    "api_key": {
-      "type": "apiKey",
-      "in": "header",
-      "name": "api_key"
-    },
-    "basic_auth": {
-      "type": "basic"
-    }
-  },
   "paths": {
-    "/users/{username}": {
+    "/company": {
       "parameters": [
         {
-          "name": "pretty_print",
-          "in": "query",
-          "description": "Pretty print response",
-          "type": "boolean"
+          "name": "Origin",
+          "in": "header",
+          "description": "CORS header",
+          "type": "string",
+          "default": "SwaggerUI"
         }
       ],
       "get": {
         "tags": [
-          "User"
+          "Company"
         ],
-        "summary": "Get user by user name",
+        "summary": "Get list of all companies",
         "description": "Some description of the operation. \nYou can use `markdown` here.\n",
-        "operationId": "getUserByName",
+        "operationId": "getCompany",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            },
+            "examples": {
+              "application/json": {
+                "username": "user1",
+                "email": "user@example.com"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Add a company.",
+        "description": "postCompany description.",
+        "operationId": "postCompany",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/company/{id}": {
+      "parameters": [
+        {
+          "name": "Origin",
+          "in": "header",
+          "description": "CORS header",
+          "type": "string",
+          "default": "SwaggerUI"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Return a company with a given ID.",
+        "description": "Some description of the operation. \nYou can use `markdown` here.\n",
+        "operationId": "getCompanyById",
         "parameters": [
           {
-            "name": "username",
+            "name": "id",
             "in": "path",
-            "description": "The name that needs to be fetched",
+            "description": "The ID of the company that needs to be fetched",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "with_email",
-            "in": "query",
-            "description": "Filter users without email",
-            "type": "boolean"
-          }
-        ],
-        "security": [
-          {
-            "main_auth": [
-              "read:users"
-            ]
-          },
-          {
-            "api_key": []
           }
         ],
         "produces": [
@@ -114,7 +124,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/Company"
             },
             "examples": {
               "application/json": {
@@ -133,145 +143,213 @@
       },
       "put": {
         "tags": [
-          "User"
+          "Company"
         ],
-        "summary": "Updated user",
-        "description": "This can only be done by the logged in user.",
-        "operationId": "updateUser",
+        "summary": "Edit a company with a given ID.",
+        "description": "Some description of the operation. \nYou can use `markdown` here.\n",
+        "operationId": "putCompanyById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the company that needs to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "produces": [
           "application/json"
         ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            },
+            "examples": {
+              "application/json": {
+                "username": "user1",
+                "email": "user@example.com"
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Remove a company with a given ID.",
+        "description": "Some description of the operation. \nYou can use `markdown` here.\n",
+        "operationId": "deleteCompanyById",
         "parameters": [
           {
-            "name": "username",
+            "name": "id",
             "in": "path",
-            "description": "The name that needs to be updated",
+            "description": "The ID of the company to be removed.",
             "required": true,
             "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Updated user object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
           }
         ],
-        "security": [
-          {
-            "main_auth": [
-              "write:users"
-            ]
-          }
+        "produces": [
+          "application/json"
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            },
+            "examples": {
+              "application/json": {
+                "username": "user1",
+                "email": "user@example.com"
+              }
+            }
           },
-          "400": {
-            "description": "Invalid user supplied"
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
             "description": "User not found"
           }
         }
       }
-    },
-    "/echo": {
-      "post": {
-        "tags": [
-          "Echo"
-        ],
-        "summary": "Echo test",
-        "description": "Receive the exact message you've sent",
-        "operationId": "echo",
-        "parameters": [
-          {
-            "name": "message",
-            "in": "body",
-            "description": "Echo payload",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "Hello world!"
-            }
-          }
-        ],
-        "security": [
-          {
-            "api_key": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "examples": {
-              "application/json": "Hello world!"
-            },
-            "schema": {
-              "type": "string"
-            },
-            "headers": {
-              "X-Rate-Limit": {
-                "type": "integer",
-                "format": "int32",
-                "description": "calls per hour allowed by the user"
-              },
-              "X-Expires-After": {
-                "type": "string",
-                "format": "date-time",
-                "description": "date in UTC when token expires"
-              }
-            }
-          }
-        },
-        "x-code-samples": [
-          {
-            "lang": "C#",
-            "source": "API.v1.Echo echo = new API.v1.Echo();\necho.message = \"Hello World!\");\nEchoResponse response = echo.post();\nif (response.statusCode == HttpStatusCode.Created)\n{\n  // Success\n}\nelse\n{\n  // Something wrong -- check response for errors\n  Console.WriteLine(response.getRawResponse());\n}\n"
-          },
-          {
-            "lang": "PHP",
-            "source": "$form = new \\API\\Entities\\Echo();\n$form->setMessage(\"Hello World!\");\ntry {\n    $pet = $client->echo()->post($form);\n} catch (UnprocessableEntityException $e) {\n    var_dump($e->getErrors());\n}\n"
-          }
-        ]
-      }
     }
   },
   "definitions": {
-    "Email": {
-      "description": "User email address",
-      "type": "string",
-      "format": "email",
-      "example": "john.smith@example.com"
-    },
-    "User": {
+    "Company": {
       "type": "object",
       "properties": {
-        "username": {
-          "description": "User supplied username",
-          "type": "string",
-          "minLength": 4,
-          "example": "John78"
+        "name": {
+          "description": "The company's name.",
+          "type": "string"
         },
-        "firstName": {
-          "description": "User first name",
+        "address": {
+          "description": "Physical address.",
           "type": "string",
-          "minLength": 1,
-          "example": "John"
+          "format": "address"
         },
-        "lastName": {
-          "description": "User last name",
+        "phone": {
+          "description": "Switchboard telephone number.",
           "type": "string",
-          "minLength": 1,
-          "example": "Smith"
+          "format": "phone"
         },
-        "email": {
-          "$ref": "#/definitions/Email"
+        "fax": {
+          "description": "Main fax number.",
+          "type": "string",
+          "format": "phone"
+        },
+        "mainUrl": {
+          "description": "Main URL.",
+          "type": "string",
+          "format": "url"
+        },
+        "employmentUrl": {
+          "description": "Employment-related URL.",
+          "type": "string",
+          "format": "url"
+        },
+        "description": {
+          "description": "Brief description of its products and/or services.",
+          "type": "string"
+        },
+        "techPub": {
+          "description": "Whether there's a formal in-house technical publications service.",
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No",
+            "Needed"
+          ]
+        },
+        "training": {
+          "description": "Whether there's a formal in-house training service.",
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No",
+            "Needed"
+          ]
+        },
+        "marketing": {
+          "description": "Whether there's a formal in-house marketing communications service.",
+          "type": "string",
+          "enum": [
+            "Yes",
+            "No",
+            "Needed"
+          ]
+        },
+        "managers": {
+          "description": "The titles, contact information, and key responsibilities of any technical communications department managers.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Manager"
+          }
+        },
+        "tools": {
+          "description": "Which tools are in use in technical communications department(s).",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tool"
+          }
+        },
+        "global": {
+          "description": "Whether the company creates content for a global audience.",
+          "type": "boolean"
+        },
+        "credentials": {
+          "description": "The credentials the company typically seeks in its candidates.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Credential"
+          }
         }
       }
+    },
+    "Manager": {
+      "description": "Technical communications department managers.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Full name of manager.",
+          "type": "string",
+          "example": "Jane Thomas"
+        },
+        "title": {
+          "description": "Title of manager's position.",
+          "type": "string",
+          "example": "Director of Technical Communication"
+        },
+        "contactInfo": {
+          "description": "Email address of manager.",
+          "type": "string",
+          "format": "email",
+          "example": "jane.thomas@abcinc.com"
+        },
+        "responsibilities": {
+          "description": "Key responsibilities of manager.",
+          "type": "string",
+          "example": "Directs team of technical writers."
+        }
+      }
+    },
+    "Tool": {
+      "description": "A tool in use in a technical communications department.",
+      "type": "string",
+      "example": "tool example"
+    },
+    "Credential": {
+      "description": "A credential a company typically seeks in its candidates.",
+      "type": "string",
+      "example": "credential example"
     }
   }
 }

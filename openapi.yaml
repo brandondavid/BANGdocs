@@ -2,100 +2,99 @@ swagger: '2.0'
 schemes:
   - http
   - https
-host: example.com
-basePath: /api/v1
+host: bang-jmbzuf.turbo360-vertex.com
+basePath: /api
 info:
   description: |
     This is an **example** API to demonstrate features of OpenAPI specification
     # Introduction
     This specification is intended to to be a good starting point for describing your API in 
     [OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
-    It also demonstrates features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) tool and 
-    [ReDoc](https://github.com/Rebilly/ReDoc) documentation engine. So beyond the standard OpenAPI syntax we use a few 
-    [vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).
-
-    # OpenAPI Specification
-    The goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which
-    allows both humans and computers to discover and understand the capabilities of the service without access to source
-    code, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can 
-    understand and interact with the remote service with a minimal amount of implementation logic. Similar to what
-    interfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.
-  version: 1.0.0
-  title: Example.com
-  termsOfService: 'https://example.com/terms/'
-  contact:
-    email: contact@example.com
-    url: 'http://example.com/contact'
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 0.1.0
+  title: Bay Area Networking Guide
   x-logo:
     url: 'https://apis.guru/openapi-template/logo.png'
-externalDocs:
-  description: Find out how to create Github repo for your OpenAPI spec.
-  url: 'https://github.com/Rebilly/generator-openapi-repo'
 produces:
   - application/json
-  - application/xml
-  - text/csv
 consumes:
   - application/json
-  - application/xml
 tags:
-  - name: Echo
-    description: Example echo operations
-  - name: User
-    description: Operations about user
-securityDefinitions:
-  main_auth:
-    type: oauth2
-    authorizationUrl: 'http://example.com/api/oauth/dialog'
-    flow: implicit
-    scopes:
-      'read:users': read users info
-      'write:users': modify or remove users
-  api_key:
-    type: apiKey
-    in: header
-    name: api_key
-  basic_auth:
-    type: basic
+  - name: Company
+    description: Operations about company
 paths:
-  '/users/{username}':
+  /company:
     parameters:
-      - name: pretty_print
-        in: query
-        description: Pretty print response
-        type: boolean
+      - name: Origin
+        in: header
+        description: CORS header
+        type: string
+        default: SwaggerUI
     get:
       tags:
-        - User
-      summary: Get user by user name
+        - Company
+      summary: Get list of all companies
       description: |
         Some description of the operation. 
         You can use `markdown` here.
-      operationId: getUserByName
-      parameters:
-        - name: username
-          in: path
-          description: The name that needs to be fetched
-          required: true
-          type: string
-        - name: with_email
-          in: query
-          description: Filter users without email
-          type: boolean
-      security:
-        - main_auth:
-            - 'read:users'
-        - api_key: []
+      operationId: getCompany
       produces:
         - application/json
       responses:
         '200':
           description: Success
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/Company'
+          examples:
+            application/json:
+              username: user1
+              email: user@example.com
+        '403':
+          description: Forbidden
+        '404':
+          description: User not found
+    post:
+      tags:
+        - Company
+      summary: Add a company.
+      description: postCompany description.
+      operationId: postCompany
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Invalid user supplied
+        '404':
+          description: User not found
+  '/company/{id}':
+    parameters:
+      - name: Origin
+        in: header
+        description: CORS header
+        type: string
+        default: SwaggerUI
+    get:
+      tags:
+        - Company
+      summary: Return a company with a given ID.
+      description: |
+        Some description of the operation. 
+        You can use `markdown` here.
+      operationId: getCompanyById
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the company that needs to be fetched
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Company'
           examples:
             application/json:
               username: user1
@@ -106,114 +105,157 @@ paths:
           description: User not found
     put:
       tags:
-        - User
-      summary: Updated user
-      description: This can only be done by the logged in user.
-      operationId: updateUser
-      produces:
-        - application/json
+        - Company
+      summary: Edit a company with a given ID.
+      description: |
+        Some description of the operation. 
+        You can use `markdown` here.
+      operationId: putCompanyById
       parameters:
-        - name: username
+        - name: id
           in: path
-          description: The name that needs to be updated
+          description: The ID of the company that needs to be fetched
           required: true
           type: string
-        - in: body
-          name: body
-          description: Updated user object
-          required: true
-          schema:
-            $ref: '#/definitions/User'
-      security:
-        - main_auth:
-            - 'write:users'
+      produces:
+        - application/json
       responses:
         '200':
-          description: OK
-        '400':
-          description: Invalid user supplied
+          description: Success
+          schema:
+            $ref: '#/definitions/Company'
+          examples:
+            application/json:
+              username: user1
+              email: user@example.com
+        '403':
+          description: Forbidden
         '404':
           description: User not found
-  /echo:
-    post:
+    delete:
       tags:
-        - Echo
-      summary: Echo test
-      description: Receive the exact message you've sent
-      operationId: echo
+        - Company
+      summary: Remove a company with a given ID.
+      description: |
+        Some description of the operation. 
+        You can use `markdown` here.
+      operationId: deleteCompanyById
       parameters:
-        - name: message
-          in: body
-          description: Echo payload
+        - name: id
+          in: path
+          description: The ID of the company to be removed.
           required: true
-          schema:
-            type: string
-            example: Hello world!
-      security:
-        - api_key: []
+          type: string
+      produces:
+        - application/json
       responses:
         '200':
-          description: OK
-          examples:
-            application/json: Hello world!
+          description: Success
           schema:
-            type: string
-          headers:
-            X-Rate-Limit:
-              type: integer
-              format: int32
-              description: calls per hour allowed by the user
-            X-Expires-After:
-              type: string
-              format: date-time
-              description: date in UTC when token expires
-      x-code-samples:
-        - lang: 'C#'
-          source: |
-            API.v1.Echo echo = new API.v1.Echo();
-            echo.message = "Hello World!");
-            EchoResponse response = echo.post();
-            if (response.statusCode == HttpStatusCode.Created)
-            {
-              // Success
-            }
-            else
-            {
-              // Something wrong -- check response for errors
-              Console.WriteLine(response.getRawResponse());
-            }
-        - lang: PHP
-          source: |
-            $form = new \API\Entities\Echo();
-            $form->setMessage("Hello World!");
-            try {
-                $pet = $client->echo()->post($form);
-            } catch (UnprocessableEntityException $e) {
-                var_dump($e->getErrors());
-            }
+            $ref: '#/definitions/Company'
+          examples:
+            application/json:
+              username: user1
+              email: user@example.com
+        '403':
+          description: Forbidden
+        '404':
+          description: User not found
 definitions:
-  Email:
-    description: User email address
-    type: string
-    format: email
-    example: john.smith@example.com
-  User:
+  Company:
     type: object
     properties:
-      username:
-        description: User supplied username
+      name:
+        description: The company's name.
         type: string
-        minLength: 4
-        example: John78
-      firstName:
-        description: User first name
+      address:
+        description: Physical address.
         type: string
-        minLength: 1
-        example: John
-      lastName:
-        description: User last name
+        format: address
+      phone:
+        description: Switchboard telephone number.
         type: string
-        minLength: 1
-        example: Smith
-      email:
-        $ref: '#/definitions/Email'
+        format: phone
+      fax:
+        description: Main fax number.
+        type: string
+        format: phone
+      mainUrl:
+        description: Main URL.
+        type: string
+        format: url
+      employmentUrl:
+        description: Employment-related URL.
+        type: string
+        format: url
+      description:
+        description: Brief description of its products and/or services.
+        type: string
+      techPub:
+        description: Whether there's a formal in-house technical publications service.
+        type: string
+        enum:
+          - 'Yes'
+          - 'No'
+          - Needed
+      training:
+        description: Whether there's a formal in-house training service.
+        type: string
+        enum:
+          - 'Yes'
+          - 'No'
+          - Needed
+      marketing:
+        description: Whether there's a formal in-house marketing communications service.
+        type: string
+        enum:
+          - 'Yes'
+          - 'No'
+          - Needed
+      managers:
+        description: 'The titles, contact information, and key responsibilities of any technical communications department managers.'
+        type: array
+        items:
+          $ref: '#/definitions/Manager'
+      tools:
+        description: Which tools are in use in technical communications department(s).
+        type: array
+        items:
+          $ref: '#/definitions/Tool'
+      global:
+        description: Whether the company creates content for a global audience.
+        type: boolean
+      credentials:
+        description: The credentials the company typically seeks in its candidates.
+        type: array
+        items:
+          $ref: '#/definitions/Credential'
+  Manager:
+    description: Technical communications department managers.
+    type: object
+    properties:
+      name:
+        description: Full name of manager.
+        type: string
+        example: Jane Thomas
+      title:
+        description: Title of manager's position.
+        type: string
+        example: Director of Technical Communication
+      contactInfo:
+        description: Email address of manager.
+        type: string
+        format: email
+        example: jane.thomas@abcinc.com
+      responsibilities:
+        description: Key responsibilities of manager.
+        type: string
+        example: Directs team of technical writers.
+  Tool:
+    description: A tool in use in a technical communications department.
+    type: string
+    example: tool example
+  Credential:
+    description: A credential a company typically seeks in its candidates.
+    type: string
+    example: credential example
