@@ -1,6 +1,13 @@
 {
-  "openapi": "3.0.0",
+  "swagger": "2.0",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "host": "example.com",
+  "basePath": "/api/v1",
   "info": {
+    "description": "This is an **example** API to demonstrate features of OpenAPI specification\n# Introduction\nThis specification is intended to to be a good starting point for describing your API in \n[OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).\nIt also demonstrates features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) tool and \n[ReDoc](https://github.com/Rebilly/ReDoc) documentation engine. So beyond the standard OpenAPI syntax we use a few \n[vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n\n# OpenAPI Specification\nThe goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which\nallows both humans and computers to discover and understand the capabilities of the service without access to source\ncode, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can \nunderstand and interact with the remote service with a minimal amount of implementation logic. Similar to what\ninterfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.\n",
     "version": "1.0.0",
     "title": "Example.com",
     "termsOfService": "https://example.com/terms/",
@@ -14,13 +21,21 @@
     },
     "x-logo": {
       "url": "https://apis.guru/openapi-template/logo.png"
-    },
-    "description": "This is an **example** API to demonstrate features of OpenAPI specification\n# Introduction\nThis specification is intended to to be a good starting point for describing your API in \n[OpenAPI/Swagger format](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).\nIt also demonstrates features of [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) tool and \n[ReDoc](https://github.com/Rebilly/ReDoc) documentation engine. So beyond the standard OpenAPI syntax we use a few \n[vendor extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md).\n\n# OpenAPI Specification\nThe goal of The OpenAPI Specification is to define a standard, language-agnostic interface to REST APIs which\nallows both humans and computers to discover and understand the capabilities of the service without access to source\ncode, documentation, or through network traffic inspection. When properly defined via OpenAPI, a consumer can \nunderstand and interact with the remote service with a minimal amount of implementation logic. Similar to what\ninterfaces have done for lower-level programming, OpenAPI removes the guesswork in calling the service.\n"
+    }
   },
   "externalDocs": {
     "description": "Find out how to create Github repo for your OpenAPI spec.",
     "url": "https://github.com/Rebilly/generator-openapi-repo"
   },
+  "produces": [
+    "application/json",
+    "application/xml",
+    "text/csv"
+  ],
+  "consumes": [
+    "application/json",
+    "application/xml"
+  ],
   "tags": [
     {
       "name": "Echo",
@@ -31,14 +46,25 @@
       "description": "Operations about user"
     }
   ],
-  "servers": [
-    {
-      "url": "http://example.com/api/v1"
+  "securityDefinitions": {
+    "main_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://example.com/api/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "read:users": "read users info",
+        "write:users": "modify or remove users"
+      }
     },
-    {
-      "url": "https://example.com/api/v1"
+    "api_key": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "api_key"
+    },
+    "basic_auth": {
+      "type": "basic"
     }
-  ],
+  },
   "paths": {
     "/users/{username}": {
       "parameters": [
@@ -46,9 +72,7 @@
           "name": "pretty_print",
           "in": "query",
           "description": "Pretty print response",
-          "schema": {
-            "type": "boolean"
-          }
+          "type": "boolean"
         }
       ],
       "get": {
@@ -64,17 +88,13 @@
             "in": "path",
             "description": "The name that needs to be fetched",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "type": "string"
           },
           {
             "name": "with_email",
             "in": "query",
             "description": "Filter users without email",
-            "schema": {
-              "type": "boolean"
-            }
+            "type": "boolean"
           }
         ],
         "security": [
@@ -87,18 +107,19 @@
             "api_key": []
           }
         ],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
             "description": "Success",
-            "content": {
+            "schema": {
+              "$ref": "#/definitions/User"
+            },
+            "examples": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                },
-                "example": {
-                  "username": "user1",
-                  "email": "user@example.com"
-                }
+                "username": "user1",
+                "email": "user@example.com"
               }
             }
           },
@@ -117,14 +138,24 @@
         "summary": "Updated user",
         "description": "This can only be done by the logged in user.",
         "operationId": "updateUser",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "username",
             "in": "path",
             "description": "The name that needs to be updated",
             "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/User"
             }
           }
         ],
@@ -145,22 +176,6 @@
           "404": {
             "description": "User not found"
           }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/User"
-              }
-            }
-          },
-          "description": "Updated user object",
-          "required": true
         }
       }
     },
@@ -172,70 +187,45 @@
         "summary": "Echo test",
         "description": "Receive the exact message you've sent",
         "operationId": "echo",
+        "parameters": [
+          {
+            "name": "message",
+            "in": "body",
+            "description": "Echo payload",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Hello world!"
+            }
+          }
+        ],
         "security": [
           {
             "api_key": []
-          },
-          {
-            "basic_auth": []
           }
         ],
         "responses": {
           "200": {
             "description": "OK",
+            "examples": {
+              "application/json": "Hello world!"
+            },
+            "schema": {
+              "type": "string"
+            },
             "headers": {
               "X-Rate-Limit": {
-                "description": "calls per hour allowed by the user",
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
+                "type": "integer",
+                "format": "int32",
+                "description": "calls per hour allowed by the user"
               },
               "X-Expires-After": {
-                "$ref": "#/components/headers/ExpiresAfter"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                },
-                "examples": {
-                  "response": {
-                    "value": "Hello world!"
-                  }
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "type": "string"
-                }
-              },
-              "text/csv": {
-                "schema": {
-                  "type": "string"
-                }
+                "type": "string",
+                "format": "date-time",
+                "description": "date in UTC when token expires"
               }
             }
           }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string",
-                "example": "Hello world!"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "type": "string",
-                "example": "Hello world!"
-              }
-            }
-          },
-          "description": "Echo payload",
-          "required": true
         },
         "x-code-samples": [
           {
@@ -250,71 +240,37 @@
       }
     }
   },
-  "components": {
-    "schemas": {
-      "Email": {
-        "description": "User email address",
-        "type": "string",
-        "format": "test",
-        "example": "john.smith@example.com"
-      },
-      "User": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "description": "User supplied username",
-            "type": "string",
-            "minLength": 4,
-            "example": "John78"
-          },
-          "firstName": {
-            "description": "User first name",
-            "type": "string",
-            "minLength": 1,
-            "example": "John"
-          },
-          "lastName": {
-            "description": "User last name",
-            "type": "string",
-            "minLength": 1,
-            "example": "Smith"
-          },
-          "email": {
-            "$ref": "#/components/schemas/Email"
-          }
-        }
-      }
+  "definitions": {
+    "Email": {
+      "description": "User email address",
+      "type": "string",
+      "format": "email",
+      "example": "john.smith@example.com"
     },
-    "headers": {
-      "ExpiresAfter": {
-        "description": "date in UTC when token expires",
-        "schema": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "description": "User supplied username",
           "type": "string",
-          "format": "date-time"
+          "minLength": 4,
+          "example": "John78"
+        },
+        "firstName": {
+          "description": "User first name",
+          "type": "string",
+          "minLength": 1,
+          "example": "John"
+        },
+        "lastName": {
+          "description": "User last name",
+          "type": "string",
+          "minLength": 1,
+          "example": "Smith"
+        },
+        "email": {
+          "$ref": "#/definitions/Email"
         }
-      }
-    },
-    "securitySchemes": {
-      "main_auth": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "http://example.com/api/oauth/dialog",
-            "scopes": {
-              "read:users": "read users info",
-              "write:users": "modify or remove users"
-            }
-          }
-        }
-      },
-      "api_key": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "api_key"
-      },
-      "basic_auth": {
-        "type": "http",
-        "scheme": "basic"
       }
     }
   }
