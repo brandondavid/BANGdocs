@@ -2,7 +2,7 @@ swagger: '2.0'
 schemes:
   - https
   - http
-host: https://bay-area-networking-guide.herokuapp.com/
+host: bay-area-networking-guide.herokuapp.com
 basePath: /api
 info:
   description: |
