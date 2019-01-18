@@ -1,7 +1,8 @@
 swagger: '2.0'
 schemes:
+  - https
   - http
-host: bang-jmbzuf.turbo360-vertex.com
+host: bay-area-networking-guide.herokuapp.com
 basePath: /api
 info:
   description: |
@@ -123,6 +124,25 @@ paths:
       summary: Return all companies
       description: Find all companies and return them.
       operationId: getCompany
+      parameters:
+        - in: query
+          name: techPub
+          description: Filter companies by formal in-house technical publications.
+          type: string
+          enum: ['Yes', 'No', 'Needed']
+          required: false
+        - in: query
+          name: training
+          description: Filter companies by formal in-house training.
+          type: string
+          enum: ['Yes', 'No', 'Needed']
+          required: false
+        - in: query
+          name: marketing
+          description: Filter companies by formal in-house marketing communications service.
+          type: string
+          enum: ['Yes', 'No', 'Needed']
+          required: false
       produces:
         - application/json
       responses:
@@ -130,10 +150,6 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/Company'
-          examples:
-            application/json:
-              username: user1
-              email: user@example.com
         '403':
           description: Forbidden
         '404':
@@ -144,6 +160,13 @@ paths:
       summary: Add a company
       description: Create a new company.
       operationId: postCompany
+      parameters:
+        - in: body
+          name: company
+          description: The company to be added.
+          required: true
+          schema:
+            $ref: '#/definitions/Company'
       produces:
         - application/json
       responses:
@@ -179,10 +202,6 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/Company'
-          examples:
-            application/json:
-              username: user1
-              email: user@example.com
         '403':
           description: Forbidden
         '404':
@@ -196,9 +215,15 @@ paths:
       parameters:
         - name: id
           in: path
-          description: The ID of the company that needs to be fetched
+          description: The ID of the company to be overwritten.
           required: true
           type: string
+        - in: body
+          name: company
+          description: The new version of the company.
+          required: true
+          schema:
+            $ref: '#/definitions/Company'
       produces:
         - application/json
       responses:
@@ -206,10 +231,6 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/Company'
-          examples:
-            application/json:
-              username: user1
-              email: user@example.com
         '403':
           description: Forbidden
         '404':
@@ -231,12 +252,6 @@ paths:
       responses:
         '200':
           description: Success
-          schema:
-            $ref: '#/definitions/Company'
-          examples:
-            application/json:
-              username: user1
-              email: user@example.com
         '403':
           description: Forbidden
         '404':
@@ -249,50 +264,51 @@ definitions:
       name:
         description: The company's name.
         type: string
+        example: ABC, Inc.
       address:
         description: Physical address.
         type: string
         format: address
+        example: 12345 Main Street, Cityville, CA
       phone:
         description: Switchboard telephone number.
         type: string
         format: phone
+        example: (112) 358-1321
       fax:
         description: Main fax number.
         type: string
         format: phone
+        example: (314) 159-2653
       mainUrl:
         description: Main URL.
         type: string
         format: url
+        example: https://abcinc.com
       employmentUrl:
         description: Employment-related URL.
         type: string
         format: url
+        example: https://abcinc.com/careers
       description:
         description: Brief description of its products and/or services.
         type: string
+        example: ABC makes products and offers services.
       techPub:
-        description: Whether there's a formal in-house technical publications service.
+        description: Whether there's formal in-house technical publications.
         type: string
-        enum:
-          - 'Yes'
-          - 'No'
-          - Needed
+        enum: ['Yes', 'No', 'Needed']
+        example: 'Yes'
       training:
-        description: Whether there's a formal in-house training service.
+        description: Whether there's formal in-house training.
         type: string
-        enum:
-          - 'Yes'
-          - 'No'
-          - Needed
+        enum: ['Yes', 'No', 'Needed']
+        example: 'No'
       marketing:
         description: Whether there's a formal in-house marketing communications service.
         type: string
-        enum:
-          - 'Yes'
-          - 'No'
-          - Needed
+        enum: ['Yes', 'No', 'Needed']
+        example: 'Needed'
       managers:
         description: 'The titles, contact information, and key responsibilities of any technical communications department managers.'
         type: array
@@ -306,6 +322,7 @@ definitions:
       global:
         description: Whether the company creates content for a global audience.
         type: boolean
+        example: true
       credentials:
         description: The credentials the company typically seeks in its candidates.
         type: array
@@ -335,8 +352,8 @@ definitions:
   Tool:
     description: A tool in use in a technical communications department.
     type: string
-    example: tool example
+    example: DITA
   Credential:
     description: A credential a company typically seeks in its candidates.
     type: string
-    example: credential example
+    example: STC Practitioner Certificate
