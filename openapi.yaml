@@ -1,9 +1,8 @@
 swagger: '2.0'
 schemes:
   - https
-  - http
-host: bay-area-networking-guide.herokuapp.com
-basePath: /api
+host: cors-anywhere.herokuapp.com
+basePath: '/https://bay-area-networking-guide.herokuapp.com/api'
 info:
   description: |
     A prototype implementation of [this spec](http://www.synergistech.com/bang-leader.html)
