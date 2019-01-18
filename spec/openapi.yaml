@@ -1,7 +1,8 @@
 swagger: '2.0'
 schemes:
+  - https
   - http
-host: bang-jmbzuf.turbo360-vertex.com
+host: https://bay-area-networking-guide.herokuapp.com/
 basePath: /api
 info:
   description: |
