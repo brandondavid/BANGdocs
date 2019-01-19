@@ -12,7 +12,6 @@ info:
 
     # Specification
     A sketch of the minimum specification is given [here](http://www.synergistech.com/bang-leader.html):
-    > At a minimum, the next edition should contain the following information:
     > - the company's name, physical address, switchboard telephone and main fax numbers, main and employment-related URLs, and a brief description of its products and/or services
     > - whether there's a formal in-house technical publications, training, or marketing communications service (and if not, is there a need for a contract solution)
     > - the titles, contact information, and key responsibilities of any technical communications department managers
@@ -69,9 +68,7 @@ info:
 
     Express.js is used as a web application framework, which greatly facilitates the webapp being RESTful, which makes it easy to have a REST API.
 
-    The API itself is written in Node.js, which means BANG is most of the way to using the classic MEAN (or MERN) stack.  However, the 
-    templating engine is simply Mustache to avoid unnecessary overhead.
-
+    The API itself is written in Node.js, which means BANG is most of the way to using the classic MEAN (or MERN) stack.  However, the templating engine is simply Mustache to avoid unnecessary overhead.
 
     The entire application is deployed on Heroku and available at [https://bay-area-networking-guide.herokuapp.com](https://bay-area-networking-guide.herokuapp.com)
 
@@ -79,8 +76,7 @@ info:
 
 
     # Data    
-    Placeholder data was generated using [this template](https://github.com/brandondavid/BANG/blob/master/seed/json-generator.md) on 
-    Vazha Omanashvili's [JSON Generator](https://www.json-generator.com).
+    Placeholder data was generated using [this template](https://github.com/brandondavid/BANG/blob/master/seed/json-generator.md) on Vazha Omanashvili's [JSON Generator](https://www.json-generator.com).
 
     The output required some cleanup, using the Python script located at LINK
   version: 0.1.0
@@ -130,13 +126,20 @@ paths:
             - 'No'
             - Needed
           required: false
+        - in: query
+          name: global
+          description: Filter companies by whether they create content for a global audience.
+          type: boolean
+          required: false
       produces:
         - application/json
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Company'
+            type: array
+            items:
+              $ref: '#/definitions/Company'
         '400':
           description: Bad Request
         '404':
