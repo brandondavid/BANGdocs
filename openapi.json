@@ -10,7 +10,7 @@
     "version": "0.1.0",
     "title": "Bay Area Networking Guide",
     "x-logo": {
-      "url": "/BANGdocs/web/logo.png"
+      "url": "../BANGdocs/web/logo.png"
     }
   },
   "produces": [
