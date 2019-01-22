@@ -87,7 +87,7 @@ info:
   version: 0.1.0
   title: Bay Area Networking Guide
   x-logo:
-    url: 'https://apis.guru/openapi-template/logo.png'
+    url: '.../web/logo.png'
 produces:
   - application/json
 consumes:
