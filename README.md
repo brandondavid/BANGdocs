@@ -1,16 +1,16 @@
-# BANG OpenAPI Specification
+# BANG API Documentation
 [![Build Status](https://travis-ci.com/brandondavid/BANGdocs.svg?branch=master)](https://travis-ci.com/brandondavid/BANGdocs)
 
 ## Developer Portals
-- [Reference Documentation (ReDoc)](https://brandondavid.github.io/BANGdocs/)
+- [ReDoc](https://brandondavid.github.io/BANGdocs/)
 - [SwaggerUI](https://brandondavid.github.io/BANGdocs/swagger-ui/)
 
-## OAS
-- OpenAPI Raw Files: [JSON](https://brandondavid.github.io/BANGdocs/openapi.json) 
+## OAS Specification
+- [JSON](https://brandondavid.github.io/BANGdocs/openapi.json) 
 - [YAML](https://brandondavid.github.io/BANGdocs/openapi.yaml)
-- RAML  
 
-## Travis/Postman
+## RAML Specification
+Unavailable at this time.
 
-
-## CORS
+## CORS Proxy
+Because the BANG API and its documentation are not cohosted, any test requests sent from the above developer portals will originate from an intermediary domain.  To ensure browser compatibility, cross-origin resource sharing (CORS) has been enabled via a proxy server at [https://cors-anywhere.herokuapp.com](https://cors-anywhere.herokuapp.com/)
